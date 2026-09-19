@@ -1,0 +1,31 @@
+Step 1:Compile the Verilog design + testbench
+
+	>>iverilog -o sim/simulation fsm_vending_machine.v tb_fsm_vending_machine.v
+
+Step 2:Run the simulation
+
+	>>vvp sim/simulation
+
+This executes the compiled simulation.
+
+Step 3:Generate a waveform
+
+Your testbench should contain:
+
+	//verilog
+	$dumpfile("vending_machine.vcd");
+	$dumpvars(0, tb_fsm_vending_machine);
+
+Creates the waveform file: vending_machine.vcd
+
+Step 4:Compile + simulate again
+
+	>>iverilog -o sim/simulation fsm_vending_machine.v tb_fsm_vending_machine.v
+
+	Then:
+
+	>>vvp sim/simulation
+
+Step 5:Open the waveform with GTKWave
+
+	>>gtkwave vending_machine.vcd

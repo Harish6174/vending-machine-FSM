@@ -1,0 +1,43 @@
+Step 1:Start yosys
+
+	>>yosys
+
+	yosys> read_verilog fsm_vending_machine.v
+
+	yosys> hierarchy -top fsm_vending_machine
+
+Step 2:synthesize
+
+	yosys> synth
+
+	yosys> stat
+
+Step 3:Generate synthesized netlist
+
+	yosys> write_verilog vending_netlist.v
+
+This creates vending_netlist.v
+
+Step 4:Exit
+
+	yosys> exit
+
+Step 5:Generate RTL schematic
+
+	>>yosys
+	yosys> read_verilog fsm_vending_machine.v
+	yosys> hierarchy -top fsm_vending_machine
+	yosys> proc
+	yosys> opt
+	yosys> fsm
+	yosys> opt
+	yosys> show -format dot -prefix vending_rtl
+	yosys> exit
+
+Now you have vending_rtl.dot
+
+Step 6:save it as image
+
+	>>dot -Tpng vending_rtl.dot -o vending_rtl.png
+
+Now you have vending_rtl.png
