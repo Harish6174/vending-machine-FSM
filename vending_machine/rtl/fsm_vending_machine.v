@@ -24,12 +24,10 @@ module fsm_vending_machine (
     reg [2:0] current_state;
     reg [2:0] next_state;
 
-
     reg ctrl_add_5;
     reg ctrl_add_10;
     reg ctrl_add_25;
     reg ctrl_clear_funds;
-
 
     wire funds_ok_a;
     wire funds_ok_b;
@@ -37,17 +35,13 @@ module fsm_vending_machine (
     assign funds_ok_a = (total_funds >= PRICE_A);
     assign funds_ok_b = (total_funds >= PRICE_B);
 
-   
-
     always @(posedge clk or posedge reset) begin
 
         if (reset) begin
             total_funds <= 8'd0;
         end
-
-        else begin
-
-            
+        
+        else begin        
             if (ctrl_clear_funds) begin
                 total_funds <= 8'd0;
             end
@@ -78,11 +72,8 @@ module fsm_vending_machine (
 
     end
 
-
-
     always @(*) begin
 
-        // Default
         next_state = current_state;
 
         case (current_state)
@@ -160,15 +151,9 @@ module fsm_vending_machine (
         ctrl_add_25      = 1'b0;
         ctrl_clear_funds = 1'b0;
 
-        
-
         case (current_state)
 
-            
-
             ADD_COIN: begin
-
-                
 
                 if (coin_25) begin
                     ctrl_add_25 = 1'b1;
@@ -182,27 +167,19 @@ module fsm_vending_machine (
                     ctrl_add_5 = 1'b1;
                 end
 
-            end
-
-            
+            end            
 
             VEND_A: begin
 
                 dispense_a = 1'b1;
-
                 
                 ctrl_clear_funds = 1'b1;
 
             end
 
-            // =================================================
-            // VEND B
-            // =================================================
-
             VEND_B: begin
 
                 dispense_b = 1'b1;
-
                 
                 ctrl_clear_funds = 1'b1;
 
@@ -221,11 +198,11 @@ module fsm_vending_machine (
         endcase
 
     end
-
     
     always @(posedge clk or posedge reset) begin
 
         if (reset) begin
+            
             change_returned <= 8'd0;
         end
 
